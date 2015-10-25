@@ -14,6 +14,7 @@ name = "MainState"
 
 boy = None
 background = None
+enemy_white = None
 font = None
 
 
@@ -26,6 +27,25 @@ class Baekground:
         self.image.draw_to_origin(0, 0, 400,700)
 
 
+class Enemy_white:
+    image = None
+    def __init__(self):
+        self.image = load_image('C:\\2D\\flight_game_fraemwork\\enemy_whitedragon_animation3.png')
+
+    def update(self):
+        self.frame = (self.frame + 1) % 11
+                #self.y -= 5
+
+    def __init__(self):
+        self.x, self.y = 200 , 600
+        self.frame = random.randint(0, 10)
+        self.run_frames = 0
+
+
+        if Enemy_white.image == None:
+            Enemy_white.image = load_image('C:\\2D\\flight_game_fraemwork\\enemy_whitedragon_animation3.png')
+    def draw(self):
+        self.image.clip_draw(self.frame * 120, 0, 120, 120, self.x, self.y)
 
 class Boy:
     image = None
@@ -68,19 +88,20 @@ class Boy:
             Boy.image = load_image('dragon_animation.png')
 
     def draw(self):
-        self.image.clip_draw(self.frame * 172, 0, 172, 126, self.x, self.y)
+        self.image.clip_draw(self.frame * 173, 0, 173, 126, self.x, self.y)
 
 
 def enter():
-    global boy, background
+    global boy, background , enemy_white
     boy = Boy()
     background = Baekground()
-
+    enemy_white = Enemy_white()
 
 def exit():
-    global boy, background
+    global boy, background , enemy_white
     del(boy)
     del(background)
+    del(enemy_white)
 
 def pause():
     pass
@@ -111,14 +132,15 @@ def handle_events():
 
 def update():
     boy.update()
-
+    enemy_white.update()
 
 def draw():
     clear_canvas()
     background.draw()
     boy.draw()
+    enemy_white.draw()
     update_canvas()
-    delay(0.1)
+    delay(0.02)
 
 
 
