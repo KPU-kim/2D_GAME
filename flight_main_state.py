@@ -17,24 +17,37 @@ background = None
 enemy_white = None
 font = None
 
+background_y = 0
+background_y_2 = 700
 
 
 class Baekground:
     def __init__(self):
         self.image = load_image('C:\\2D\\flight_game_fraemwork\\dragon flight\\dragon flight\\background\\sea.png')
+        self.image2 = load_image('C:\\2D\\flight_game_fraemwork\\dragon flight\\dragon flight\\background\\sea.png')
 
+    def update(self):
+        global background_y, background_y_2
+        background_y -=5
+        background_y_2 -=5
+        if(background_y_2 == 0):
+            background_y = 0
+            background_y_2 = 700
     def draw(self):
-        self.image.draw_to_origin(0, 0, 400,700)
-
+        global background_y, background_y_2
+        self.image.draw_to_origin(0, background_y, 400,700)
+    def draw2(self):
+        global background_y, background_y_2
+        self.image.draw_to_origin(0, background_y_2, 400,700)
 
 class Enemy_white:
     image = None
-    def __init__(self):
-        self.image = load_image('C:\\2D\\flight_game_fraemwork\\enemy_whitedragon_animation3.png')
+    #def __init__(self):
+     #   self.image = load_image('C:\\2D\\flight_game_fraemwork\\enemy_whitedragon_animation3.png')
 
     def update(self):
         self.frame = (self.frame + 1) % 11
-                #self.y -= 5
+        self.y -= 5
 
     def __init__(self):
         self.x, self.y = 200 , 600
@@ -126,17 +139,15 @@ def handle_events():
 
 
 
-
-
-
-
 def update():
     boy.update()
     enemy_white.update()
+    background.update()
 
 def draw():
     clear_canvas()
     background.draw()
+    background.draw2()
     boy.draw()
     enemy_white.draw()
     update_canvas()
