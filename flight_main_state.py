@@ -126,7 +126,7 @@ class Boy:
 
         self.state = self.LEFT_STAND
         if Boy.image == None:
-            Boy.image = load_image('dragon_animation2.png')
+            Boy.image = load_image('dragon_animation.png')
 
     def draw(self):
         self.image.clip_draw(self.frame * 173, 0, 173, 126, self.x, self.y)
@@ -219,6 +219,7 @@ def draw():
         i.draw()
     update_canvas()
     delay(0.05)
+
 
 
 

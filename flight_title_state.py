@@ -1,5 +1,6 @@
 import game_framework
 from pico2d import *
+import selback_state
 
 
 name = "TitleState"
@@ -8,14 +9,14 @@ image = None
 
 def enter():
     global image
-    image = load_image('title.png')
+    image = load_image('title3.png')
 
 
 def exit():
     global image
     del(image)
 
-import flight_main_state
+#import flight_main_state
 
 def handle_events():
     events = get_events()
@@ -26,7 +27,7 @@ def handle_events():
             if (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
                 game_framework.quit()
             elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_SPACE):
-                game_framework.change_state(flight_main_state)
+                game_framework.change_state(selback_state)
 
 
 
