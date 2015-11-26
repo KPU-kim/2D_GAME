@@ -9,7 +9,7 @@ class Background1:
         self.image = load_image('C:\\2D\\flight_game_fraemwork\\dragon flight\\dragon flight\\background\\spring.png')
         self.image2 = load_image('C:\\2D\\flight_game_fraemwork\\dragon flight\\dragon flight\\background\\spring.png')
         self.bgm = load_music('C:\\2D\\flight_game_fraemwork\\dragon flight\\dragon flight\\bgm\\dragon_flight.mp3')
-        self.bgm.set_volume(60)
+        self.bgm.set_volume(30)
         self.bgm.repeat_play()
     def update(self):
         global background1_y, background1_y_2

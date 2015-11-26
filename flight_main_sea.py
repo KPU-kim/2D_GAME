@@ -51,10 +51,10 @@ class Enemy_white:
 
     def update(self):
         self.frame = (self.frame + 1) % 11
-                #self.y -= 5
+        self.y -= 5
 
     def __init__(self):
-        self.x, self.y = 200 , 600
+        self.x, self.y = random.randint(60,400-60) , random.randint(400,600)
         self.frame = random.randint(0, 10)
         self.run_frames = 0
 
@@ -72,16 +72,29 @@ class Enemy_white:
          draw_rectangle(*self.get_bb())
 
 class Enemy_yellow:
+    PIXEL_PER_METER = (10.0 / 0.3)
+    RUN_SPEED_KMPH = 20.0
+    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
+    TIME_PER_ACTION = 0.5
+    ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
+    FRAMES_PER_ACTION = 8
+
     image = None
     #def __init__(self):
       #  self.image = load_image('C:\\2D\\flight_game_fraemwork\\enemy_whitedragon_animation3.png')
 
-    def update(self):
+    def update(self,frame_time):
+        distance = Enemy_yellow.RUN_SPEED_PPS * frame_time
         self.frame = (self.frame + 1) % 11
-                #self.y -= 5
+
+        self.y -= distance
+        #self.y -= 5
 
     def __init__(self):
-        self.x, self.y = 320 , 600
+        self.x, self.y = random.randint(60,400-60) , 800
         self.frame = random.randint(0, 10)
         self.run_frames = 0
 
@@ -130,10 +143,10 @@ class Enemy_pink:
 
     def update(self):
         self.frame = (self.frame + 1) % 7
-                #self.y -= 5
+        self.y -= 5
 
     def __init__(self):
-        self.x, self.y = 80 , 600
+        self.x, self.y = random.randint(60,400-60) , 700
         self.frame = random.randint(0, 10)
         self.run_frames = 0
 
@@ -150,6 +163,16 @@ class Enemy_pink:
          draw_rectangle(*self.get_bb())
 
 class Kirby:
+    PIXEL_PER_METER = (10.0 / 0.3)
+    RUN_SPEED_KMPH = 20.0
+    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
+    TIME_PER_ACTION = 0.5
+    ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
+    FRAMES_PER_ACTION = 8
+
     image = None
     LEFT_RUN, RIGHT_RUN, LEFT_STAND, RIGHT_STAND, UP_RUN, DOWN_RUN, UP_STAND, DOWN_STAND = 0, 1, 2, 3, 4, 5, 6, 7
 
@@ -182,20 +205,21 @@ class Kirby:
             if self.state in (self.DOWN_RUN,):
                 self.state = self.DOWN_STAND
 
-    def update(self):
+    def update(self,frame_time):
+        distance = Kirby.RUN_SPEED_PPS * frame_time
         self.frame = (self.frame + 1) % 11
         if self.state == self.RIGHT_RUN:
-            self.x = min(400,self.x + 5)
+            self.x = min(400,self.x + distance)
         elif self.state == self.LEFT_RUN:
-            self.x = max(0, self.x - 5 )
+            self.x = max(0, self.x - distance )
         elif self.state == self.LEFT_STAND:
             pass
         elif self.state == self.RIGHT_STAND:
             pass
         elif self.state == self.UP_RUN:
-            self.y = min(700,self.y + 5)
+            self.y = min(700,self.y + distance)
         elif self.state == self.DOWN_RUN:
-            self.y = max(0,self.y - 5)
+            self.y = max(0,self.y - distance)
         pass
 
     def __init__(self):
@@ -222,13 +246,24 @@ class Kirby:
         draw_rectangle(*self.get_bb())
 
 class Missile:
+    PIXEL_PER_METER = (10.0 / 0.3)
+    RUN_SPEED_KMPH = 30.0
+    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
+    TIME_PER_ACTION = 0.5
+    ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
+    FRAMES_PER_ACTION = 8
+
     global dragon
     def __init__(self, x, y):
         self.x, self.y = x, y
         self.image = load_image('C:\\2D\\flight_game_fraemwork\\dragon flight\\shoot1.png')
 
-    def update(self):
-        self.y += 5
+    def update(self,frame_time):
+        distance = Missile.RUN_SPEED_PPS * frame_time
+        self.y += distance
         #if(self.y > 700):
          #   self.y = 0
           #  del Missile_1
@@ -246,14 +281,16 @@ class Missile:
 
 def enter():
     global dragon, background , enemy_white , enemy_yellow, enemy_pink, Missiles_1, ice_cragon
+    global current_time , first_time
     dragon = Kirby()
     background = Background()
-    enemy_white = Enemy_white()
-    enemy_yellow = Enemy_yellow()
-    enemy_pink = Enemy_pink()
-    ice_cragon = Ice_cragon()
-    Missiles_1 = list()
-
+    enemy_white = [Enemy_white() for i in range(0)]
+    enemy_yellow = [Enemy_yellow() for i in range(0)]
+    enemy_pink = [Enemy_pink() for i in range(0)]
+    ice_cragon = [Ice_cragon( )for i in range(1)]
+    Missiles_1 = [Missile() for i in range(0)]
+    current_time = get_time()
+    first_time = get_time()
 
 
 def exit():
@@ -275,34 +312,84 @@ def resume():
 
 
 def handle_events():
-    global dragon
+    global dragon,enemy_white , enemy_yellow, enemy_pink
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-
             game_framework.change_state(selback_state)
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_1:
+            enemy_white.append(Enemy_white())
+            enemy_yellow.append(Enemy_yellow())
+            enemy_pink.append(Enemy_pink())
         else:
             dragon.handel_event(event)
             pass
 
 
+def get_frame_time():
+    global current_time
+    frame_time = get_time() - current_time
+    current_time += frame_time
+    return frame_time
+
+def make_monster(time):
+    global first_time, enemy_yellow
+    if abs(time - get_time()) > 2:
+        first_time = get_time()
+        enemy_yellow.append(Enemy_yellow())
+
+
 
 
 def update():
-    dragon.update()
-    enemy_white.update()
-    #global missile
-    enemy_yellow.update()
-    enemy_pink.update()
-    ice_cragon.update()
-    for Missile_1 in Missiles_1:
-        Missile_1.update()
 
+    frame_time = get_frame_time()
+    make_monster(first_time)
+    print(abs(first_time - get_time()))
+    dragon.update(frame_time)
+    for white in enemy_white :
+        white.update()
+    # 움직이는 부분
+    for yellow in enemy_yellow :
+        yellow.update(frame_time)
+
+    for pink in enemy_pink :
+        pink.update()
+    for ice in ice_cragon :
+        ice.update()
     for Missile_1 in Missiles_1:
-        if collide(dragon , enemy_white):
-            print("collision")
+        Missile_1.update(frame_time)
+        if Missile_1.y > 700:
+            Missiles_1.remove(Missile_1)
+        #if  collide(Missile_1,enemy_yellow)
+
+    #충돌부분
+    for Missile_1 in Missiles_1:
+        for pink in enemy_pink :
+            if collide(Missile_1 , pink):
+                Missiles_1.remove(Missile_1)
+                enemy_pink.remove(pink)
+                break
+    for Missile_1 in Missiles_1:
+        for yellow in enemy_yellow :
+            if collide(Missile_1 , yellow):
+                Missiles_1.remove(Missile_1)
+                enemy_yellow.remove(yellow)
+                break
+    for Missile_1 in Missiles_1:
+        for white in enemy_white :
+            if collide(Missile_1 , white):
+                Missiles_1.remove(Missile_1)
+                enemy_white.remove(white)
+                break
+    for Missile_1 in Missiles_1:
+        for ice in ice_cragon :
+            if collide(Missile_1 , ice):
+                Missiles_1.remove(Missile_1)
+                ice_cragon.remove(ice)
+                break
     background.update()
 
 def draw():
@@ -311,14 +398,18 @@ def draw():
     background.draw2()
     dragon.draw()
     dragon.draw_bb()
-    enemy_white.draw()
-    enemy_white.draw_bb()
-    enemy_yellow.draw()
-    enemy_yellow.draw_bb()
-    enemy_pink.draw()
-    enemy_pink.draw_bb()
-    ice_cragon.draw()
-    ice_cragon.draw_bb()
+    for white in enemy_white :
+        white.draw()
+        white.draw_bb()
+    for yellow in enemy_yellow :
+        yellow.draw()
+        yellow.draw_bb()
+    for pink in enemy_pink :
+        pink.draw()
+        pink.draw_bb()
+    for ice in ice_cragon :
+        ice.draw()
+        ice.draw_bb()
 
 
     for Missile_1 in Missiles_1:
@@ -339,7 +430,7 @@ def collide(a, b):
 
     if left_a > right_b : return False
     if right_a < left_b : return False
-    if top_a > bottom_b : return False
-    if bottom_a < top_b : return False
+    if top_a < bottom_b : return False
+    if bottom_a > top_b : return False
 
     return True
