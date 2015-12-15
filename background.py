@@ -9,9 +9,9 @@ background_y_2 = 700
 class Background:
     move_y = 100
     def __init__(self):
-        self.image = load_image('C:\\2D\\flight_game_fraemwork\\dragon flight\\dragon flight\\background\\sea.png')
+        self.image = load_image('dragon flight\\dragon flight\\background\\sea.png')
         #self.image2 = load_image('C:\\2D\\flight_game_fraemwork\\dragon flight\\dragon flight\\background\\sea.png')
-        self.bgm = load_music('C:\\2D\\flight_game_fraemwork\\dragon flight\\dragon flight\\bgm\\dragon_flight2.mp3')
+        self.bgm = load_music('dragon flight\\dragon flight\\bgm\\dragon_flight2.mp3')
         self.bgm.set_volume(30)
         self.bgm.repeat_play()
         self.y = 0

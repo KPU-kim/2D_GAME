@@ -127,12 +127,12 @@ class Missile:
     sound2 = None
     def __init__(self, x, y):
         self.x, self.y = x, y
-        self.image = load_image('C:\\2D\\flight_game_fraemwork\\dragon flight\\shoot1.png')
+        self.image = load_image('dragon flight\\shoot1.png')
         if Missile.sound == None:
-             Missile.sound = load_wav('C:\\2D\\flight_game_fraemwork\\dragon flight\\dragon flight\\sound\\fire_explo.wav')
+             Missile.sound = load_wav('dragon flight\\dragon flight\\sound\\fire_explo.wav')
              Missile.sound.set_volume(20)
         if Missile.sound2 == None:
-             Missile.sound2 = load_wav('C:\\2D\\flight_game_fraemwork\\dragon flight\\dragon flight\\sound\\dragon_death.wav')
+             Missile.sound2 = load_wav('dragon flight\\dragon flight\\sound\\dragon_death.wav')
              Missile.sound2.set_volume(30)
 
     def update(self,frame_time):
@@ -165,7 +165,7 @@ class Skill_missile :
 
     def __init__(self, x, y):
         self.x, self.y = x, y
-        self.image = load_image('C:\\2D\\flight_game_fraemwork\\dragon flight\\skill-horz.png')
+        self.image = load_image('dragon flight\\skill-horz.png')
 
 
     def update(self,frame_time):
@@ -216,7 +216,7 @@ class Enemy_white:
 
 
         if Enemy_white.image == None:
-            Enemy_white.image = load_image('C:\\2D\\flight_game_fraemwork\\Image\\enemy\\enemy_whitedragon_animation3.png')
+            Enemy_white.image = load_image('Image\\enemy\\enemy_whitedragon_animation3.png')
 
     def draw(self):
         self.image.clip_draw(self.frame * 120, 0, 120, 120, self.x, self.y)
@@ -261,7 +261,7 @@ class Enemy_yellow:
 
 
         if Enemy_yellow.image == None:
-            Enemy_yellow.image = load_image('C:\\2D\\flight_game_fraemwork\\Image\\enemy\\enemy_yellow_dragon_animation.png')
+            Enemy_yellow.image = load_image('Image\\enemy\\enemy_yellow_dragon_animation.png')
     def draw(self):
         self.image.clip_draw(self.frame * 120, 0, 120, 120, self.x, self.y)
 
@@ -304,7 +304,7 @@ class Enemy_pink:
 
 
         if Enemy_pink.image == None:
-            Enemy_pink.image = load_image('C:\\2D\\flight_game_fraemwork\\Image\\enemy\\enemy_pink_dragon_animation.png')
+            Enemy_pink.image = load_image('Image\\enemy\\enemy_pink_dragon_animation.png')
     def draw(self):
         self.image.clip_draw(self.frame * 120, 0, 120, 120, self.x, self.y)
 
@@ -348,7 +348,7 @@ class Enemy_green:
 
 
         if Enemy_green.image == None:
-            Enemy_green.image = load_image('C:\\2D\\flight_game_fraemwork\\Image\\enemy\\enemy_green_dragon_animation.png')
+            Enemy_green.image = load_image('Image\\enemy\\enemy_green_dragon_animation.png')
     def draw(self):
         self.image.clip_draw(self.frame * 120, 0, 120, 120, self.x, self.y)
 
@@ -372,7 +372,7 @@ class Enemy_missile :
 
     def __init__(self, x, y) :
         self.x, self.y = x, y
-        self.image = load_image('C:\\2D\\flight_game_fraemwork\\dragon flight\\enemy_shoot.png')
+        self.image = load_image('dragon flight\\enemy_shoot.png')
 #--------------------------------------------------#
     def update(self, frame_time) :
         distance = Enemy_missile.RUN_SPEED_PPS * frame_time
@@ -443,7 +443,7 @@ class Ice_cragon: # 보스
         self.direction = self.LEFT_MOVE
 
         if Ice_cragon.image == None:
-            Ice_cragon.image = load_image('C:\\2D\\flight_game_fraemwork\\Image\\enemy\\enemy_ice_cragon_animation.png')
+            Ice_cragon.image = load_image('Image\\enemy\\enemy_ice_cragon_animation.png')
     def draw(self):
         self.image.clip_draw(self.frame * 200, 0, 200, 200, self.x, self.y)
 
@@ -627,7 +627,7 @@ def update():
 
     for enemy_missile in Enemy_Missile_List :
         if collide(enemy_missile, dragon) :
-            game_framework.push_state(gameover_state  )
+            game_framework.push_state(gameover_state)
 
     background.update(frame_time)
 

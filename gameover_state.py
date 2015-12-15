@@ -13,7 +13,7 @@ def enter():
     if image == None:
         image = load_image('gameover.png')
     if sound3 == None:
-        sound3 = load_music('C:\\2D\\flight_game_fraemwork\\game_over.mp3')
+        sound3 = load_music('game_over.mp3')
         sound3.set_volume(64)
         sound3.play()
 
